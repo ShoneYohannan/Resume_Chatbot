@@ -25,9 +25,7 @@ An AI-powered Resume Analyzer that enables users to upload their resume in PDF f
 
 > Add screenshot here
 
-```text
-images/s1.png
-```
+![Home Page](images/s1.png)
 
 ---
 
@@ -35,9 +33,7 @@ images/s1.png
 
 > Add screenshot here
 
-```text
-images/s2.png
-```
+![ATS Resume Evaluation](images/s2.png)
 
 ---
 
@@ -45,9 +41,7 @@ images/s2.png
 
 > Add screenshot here
 
-```text
-images/s3.png
-```
+![Resume Chat Interface](images/s3.png)
 
 ---
 
