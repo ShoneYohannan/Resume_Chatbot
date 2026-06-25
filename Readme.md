@@ -26,7 +26,7 @@ An AI-powered Resume Analyzer that enables users to upload their resume in PDF f
 > Add screenshot here
 
 ```text
-images/Screenshot%202026-06-25%20223455.png
+images/s1.png
 ```
 
 ---
@@ -36,7 +36,7 @@ images/Screenshot%202026-06-25%20223455.png
 > Add screenshot here
 
 ```text
-images/Screenshot%202026-06-25%20223444.png
+images/s2.png
 ```
 
 ---
@@ -46,7 +46,7 @@ images/Screenshot%202026-06-25%20223444.png
 > Add screenshot here
 
 ```text
-images/Screenshot%202026-06-25%20223433.png
+images/s3.png
 ```
 
 ---
