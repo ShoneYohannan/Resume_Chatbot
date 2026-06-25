@@ -60,6 +60,56 @@ User question:
     return response.choices[0].message.content
 
 
+def ats_score():
+    global resume_text
+
+    if resume_text.strip() == "":
+        return "❌ Please upload and process your resume first."
+
+    prompt = f"""
+You are an ATS Resume Evaluator.
+
+Analyze the resume and give a practical ATS-style score out of 100.
+
+Use this format exactly:
+
+## ATS Score: __/100
+
+## Reason for Score
+Explain why this score was given.
+
+## Strengths
+- point 1
+- point 2
+- point 3
+
+## Weaknesses
+- point 1
+- point 2
+- point 3
+
+## Improvements Needed
+- point 1
+- point 2
+- point 3
+
+## Best Suitable Roles
+- role 1
+- role 2
+- role 3
+
+Resume:
+{resume_text}
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    return response.choices[0].message.content
+
+
 custom_css = """
 .gradio-container {
     background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
@@ -112,7 +162,7 @@ custom_css = """
     animation: cardPop 1.2s ease;
 }
 
-/* Process Button */
+/* Main Button */
 #process-btn {
     background: linear-gradient(135deg, #06b6d4, #3b82f6) !important;
     color: white !important;
@@ -123,7 +173,19 @@ custom_css = """
     transition: all 0.3s ease !important;
 }
 
-#process-btn:hover {
+/* ATS Button */
+#ats-btn {
+    background: linear-gradient(135deg, #f97316, #ec4899) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+#process-btn:hover,
+#ats-btn:hover {
     transform: scale(1.03);
     box-shadow: 0 0 22px rgba(59,130,246,0.65) !important;
 }
@@ -141,6 +203,12 @@ button:hover {
 #status-text {
     color: #4ade80 !important;
     font-weight: 700 !important;
+}
+
+/* ATS Output */
+#ats-output {
+    border-radius: 14px !important;
+    border: 1px solid rgba(236,72,153,0.35) !important;
 }
 
 /* Chatbot Box */
@@ -167,7 +235,7 @@ textarea {
 }
 
 @keyframes hideBanner {
-    0%, 70% {
+    0%, 93% {
         opacity: 1;
         max-height: 120px;
         padding: 18px 22px;
@@ -246,10 +314,26 @@ with gr.Blocks() as app:
             outputs=status
         )
 
+        ats_btn = gr.Button(
+            "📊 Generate ATS Score",
+            elem_id="ats-btn"
+        )
+
+        ats_output = gr.Markdown(
+            "",
+            elem_id="ats-output"
+        )
+
+        ats_btn.click(
+            fn=ats_score,
+            inputs=[],
+            outputs=ats_output
+        )
+
         gr.ChatInterface(
             fn=chat_with_resume,
             chatbot=gr.Chatbot(
-                height=350,
+                height=500,
                 elem_classes="chatbot"
             ),
             textbox=gr.Textbox(
